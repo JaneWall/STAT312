@@ -1,0 +1,6 @@
+# (PART) Text Analysis {-}
+
+# Introduction to Text Analysis {#text_analysis-intro}
+
+
+What this module is about.

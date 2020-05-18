@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Tidy Text Mining from STAT 413 | STAT 312 - Introduction to Data Science Applications</title>
+  <meta name="description" content="5 Tidy Text Mining from STAT 413 | STAT 312 - Introduction to Data Science Applications" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Tidy Text Mining from STAT 413 | STAT 312 - Introduction to Data Science Applications" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Tidy Text Mining from STAT 413 | STAT 312 - Introduction to Data Science Applications" />
+  
+  
+  
+
+<meta name="author" content="M. Barouti" />
+<meta name="author" content="D. Dietz" />
+<meta name="author" content="M. Robinson" />
+<meta name="author" content="J. Wall" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="text1.html"/>
+<link rel="next" href="tidy-text-mining-from-stat-413-continued.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="0.1" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i><b>0.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="0.2" data-path="introduction.html"><a href="introduction.html#syllabus-and-grading"><i class="fa fa-check"></i><b>0.2</b> Syllabus and grading</a></li>
+<li class="chapter" data-level="0.3" data-path="introduction.html"><a href="introduction.html#how-to-use-the-course-materials"><i class="fa fa-check"></i><b>0.3</b> How to use the course materials</a></li>
+</ul></li>
+<li class="part"><span><b>I Data Visualization</b></span></li>
+<li class="chapter" data-level="1" data-path="visualization-intro.html"><a href="visualization-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Visualization</a><ul>
+<li class="chapter" data-level="1.1" data-path="visualization-intro.html"><a href="visualization-intro.html#install-r-and-rstudio-or-use-rstudio-cloud"><i class="fa fa-check"></i><b>1.1</b> Install R and RStudio (or use RStudio Cloud)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro-to-ggplot.html"><a href="intro-to-ggplot.html"><i class="fa fa-check"></i><b>2</b> Intro to ggplot</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro-to-ggplot.html"><a href="intro-to-ggplot.html#why-visualize-data"><i class="fa fa-check"></i><b>2.1</b> Why visualize data?</a></li>
+<li class="chapter" data-level="2.2" data-path="intro-to-ggplot.html"><a href="intro-to-ggplot.html#other-topics"><i class="fa fa-check"></i><b>2.2</b> Other topics</a></li>
+</ul></li>
+<li class="part"><span><b>II Text Analysis</b></span></li>
+<li class="chapter" data-level="3" data-path="text-analysis-intro.html"><a href="text-analysis-intro.html"><i class="fa fa-check"></i><b>3</b> Introduction to Text Analysis</a></li>
+<li class="chapter" data-level="4" data-path="text1.html"><a href="text1.html"><i class="fa fa-check"></i><b>4</b> Text1</a></li>
+<li class="chapter" data-level="5" data-path="tidy-text-mining-from-stat-413.html"><a href="tidy-text-mining-from-stat-413.html"><i class="fa fa-check"></i><b>5</b> Tidy Text Mining from STAT 413</a><ul>
+<li class="chapter" data-level="5.1" data-path="tidy-text-mining-from-stat-413.html"><a href="tidy-text-mining-from-stat-413.html#tidy-text-format"><i class="fa fa-check"></i><b>5.1</b> Tidy Text Format</a></li>
+<li class="chapter" data-level="5.2" data-path="tidy-text-mining-from-stat-413.html"><a href="tidy-text-mining-from-stat-413.html#unnest_tokens-on-larger-text"><i class="fa fa-check"></i><b>5.2</b> <code>unnest_tokens()</code> on larger text</a></li>
+<li class="chapter" data-level="5.3" data-path="tidy-text-mining-from-stat-413.html"><a href="tidy-text-mining-from-stat-413.html#compare-word-frequencies-between-authors"><i class="fa fa-check"></i><b>5.3</b> Compare word frequencies between authors</a></li>
+<li class="chapter" data-level="5.4" data-path="tidy-text-mining-from-stat-413.html"><a href="tidy-text-mining-from-stat-413.html#compare-word-frequency-by-author-to-austen"><i class="fa fa-check"></i><b>5.4</b> Compare word frequency by author to Austen</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tidy-text-mining-from-stat-413-continued.html"><a href="tidy-text-mining-from-stat-413-continued.html"><i class="fa fa-check"></i><b>6</b> Tidy text mining from STAT 413 continued</a><ul>
+<li class="chapter" data-level="6.1" data-path="tidy-text-mining-from-stat-413-continued.html"><a href="tidy-text-mining-from-stat-413-continued.html#sentiment-analysis"><i class="fa fa-check"></i><b>6.1</b> Sentiment Analysis</a></li>
+<li class="chapter" data-level="6.2" data-path="tidy-text-mining-from-stat-413-continued.html"><a href="tidy-text-mining-from-stat-413-continued.html#plot-a-sentiment-by-chapter"><i class="fa fa-check"></i><b>6.2</b> Plot a sentiment by chapter</a></li>
+<li class="chapter" data-level="6.3" data-path="tidy-text-mining-from-stat-413-continued.html"><a href="tidy-text-mining-from-stat-413-continued.html#modifying-what-contributes-to-sentiment-analysis"><i class="fa fa-check"></i><b>6.3</b> Modifying what contributes to sentiment analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="tidy-text-mining-from-stat-413-continued.html"><a href="tidy-text-mining-from-stat-413-continued.html#wordcloud-plots"><i class="fa fa-check"></i><b>6.4</b> WordCloud plots</a></li>
+</ul></li>
+<li class="part"><span><b>III Music Analysis</b></span></li>
+<li class="chapter" data-level="7" data-path="music-analysis-intro.html"><a href="music-analysis-intro.html"><i class="fa fa-check"></i><b>7</b> Introduction to Music Analysis</a></li>
+<li class="chapter" data-level="8" data-path="music-1st-chapter-header.html"><a href="music-1st-chapter-header.html"><i class="fa fa-check"></i><b>8</b> Music 1st chapter header</a></li>
+<li class="part"><span><b>IV Ethics and Machine Learning</b></span></li>
+<li class="chapter" data-level="9" data-path="ethics-intro.html"><a href="ethics-intro.html"><i class="fa fa-check"></i><b>9</b> Introduction to Ethics and Machine Learning</a></li>
+<li class="chapter" data-level="10" data-path="machine-learning-intro.html"><a href="machine-learning-intro.html"><i class="fa fa-check"></i><b>10</b> Machine Learning Intro</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 312 - Introduction to Data Science Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tidy-text-mining-from-stat-413" class="section level1">
+<h1><span class="header-section-number">5</span> Tidy Text Mining from STAT 413</h1>
+<p>Learning Objectives</p>
+<ul>
+<li>Remove stop words and identify frequently used words in a text</li>
+<li>Compare word counts between different groups of text</li>
+</ul>
+<p>Resources:</p>
+<p><a href="https://www.tidytextmining.com/">Text Mining with R by Julia Silge and David Robinson</a>.</p>
+<div id="tidy-text-format" class="section level2">
+<h2><span class="header-section-number">5.1</span> Tidy Text Format</h2>
+<p>This first <a href="https://youtu.be/80RHkcE_TIs">video</a> corresponds to the online book sections 1.1 - 1.2 which I suggest you read first.</p>
+<p>Tidy text format (ttf): A table with one token per row where a token is a meaningful unit of text such as a word, n-gram, sentence or paragraph.</p>
+<p>Other text mining tools use:</p>
+<ul>
+<li>strings</li>
+<li>corpus: contain raw strings annotated with metadata</li>
+<li>document-term matrix: sparse matrix with each row containing one document and each column one term or word; entries are generally counts or td-idf (term frequency - inverse document freq)</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">text &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;If You Forget Me&quot;</span>,</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="st">&quot;by Pablo Neruda&quot;</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="st">&quot;I want you to know&quot;</span>,</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="st">&quot;one thing.&quot;</span>,</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="st">&quot;You know how this is:&quot;</span>,</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="st">&quot;if I look&quot;</span>,</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="st">&quot;at the crystal moon, at the red branch&quot;</span>,</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="st">&quot;of the slow autumn at my window,&quot;</span>,</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="st">&quot;if I touch&quot;</span>,</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="st">&quot;near the fire&quot;</span>,</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="st">&quot;the impalpable ash&quot;</span>,</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="st">&quot;or the wrinkled body of the log,&quot;</span>,</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="st">&quot;everything carries me to you,&quot;</span>,</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="st">&quot;as if everything that exists,&quot;</span>,</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="st">&quot;aromas, light, metals,&quot;</span>,</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="st">&quot;were little boats&quot;</span>,</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="st">&quot;that sail&quot;</span>,</a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="st">&quot;toward those isles of yours that wait for me.&quot;</span></a>
+<a class="sourceLine" id="cb1-19" title="19">)</a>
+<a class="sourceLine" id="cb1-20" title="20">text</a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;  [1] &quot;If You Forget Me&quot;                             </span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt;  [2] &quot;by Pablo Neruda&quot;                              </span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt;  [3] &quot;I want you to know&quot;                           </span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;  [4] &quot;one thing.&quot;                                   </span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;  [5] &quot;You know how this is:&quot;                        </span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;  [6] &quot;if I look&quot;                                    </span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt;  [7] &quot;at the crystal moon, at the red branch&quot;       </span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt;  [8] &quot;of the slow autumn at my window,&quot;             </span></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt;  [9] &quot;if I touch&quot;                                   </span></a>
+<a class="sourceLine" id="cb1-30" title="30"><span class="co">#&gt; [10] &quot;near the fire&quot;                                </span></a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; [11] &quot;the impalpable ash&quot;                           </span></a>
+<a class="sourceLine" id="cb1-32" title="32"><span class="co">#&gt; [12] &quot;or the wrinkled body of the log,&quot;             </span></a>
+<a class="sourceLine" id="cb1-33" title="33"><span class="co">#&gt; [13] &quot;everything carries me to you,&quot;                </span></a>
+<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt; [14] &quot;as if everything that exists,&quot;                </span></a>
+<a class="sourceLine" id="cb1-35" title="35"><span class="co">#&gt; [15] &quot;aromas, light, metals,&quot;                       </span></a>
+<a class="sourceLine" id="cb1-36" title="36"><span class="co">#&gt; [16] &quot;were little boats&quot;                            </span></a>
+<a class="sourceLine" id="cb1-37" title="37"><span class="co">#&gt; [17] &quot;that sail&quot;                                    </span></a>
+<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt; [18] &quot;toward those isles of yours that wait for me.&quot;</span></a>
+<a class="sourceLine" id="cb1-39" title="39">text_df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb1-40" title="40">  <span class="dt">line =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(text),</a>
+<a class="sourceLine" id="cb1-41" title="41">  <span class="dt">text =</span> text</a>
+<a class="sourceLine" id="cb1-42" title="42">)</a>
+<a class="sourceLine" id="cb1-43" title="43">text_df</a>
+<a class="sourceLine" id="cb1-44" title="44"><span class="co">#&gt; # A tibble: 18 x 2</span></a>
+<a class="sourceLine" id="cb1-45" title="45"><span class="co">#&gt;    line text                 </span></a>
+<a class="sourceLine" id="cb1-46" title="46"><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;                </span></a>
+<a class="sourceLine" id="cb1-47" title="47"><span class="co">#&gt; 1     1 If You Forget Me     </span></a>
+<a class="sourceLine" id="cb1-48" title="48"><span class="co">#&gt; 2     2 by Pablo Neruda      </span></a>
+<a class="sourceLine" id="cb1-49" title="49"><span class="co">#&gt; 3     3 I want you to know   </span></a>
+<a class="sourceLine" id="cb1-50" title="50"><span class="co">#&gt; 4     4 one thing.           </span></a>
+<a class="sourceLine" id="cb1-51" title="51"><span class="co">#&gt; 5     5 You know how this is:</span></a>
+<a class="sourceLine" id="cb1-52" title="52"><span class="co">#&gt; 6     6 if I look            </span></a>
+<a class="sourceLine" id="cb1-53" title="53"><span class="co">#&gt; # ... with 12 more rows</span></a>
+<a class="sourceLine" id="cb1-54" title="54">text_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-55" title="55"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text)</a>
+<a class="sourceLine" id="cb1-56" title="56"><span class="co">#&gt; # A tibble: 80 x 2</span></a>
+<a class="sourceLine" id="cb1-57" title="57"><span class="co">#&gt;    line word  </span></a>
+<a class="sourceLine" id="cb1-58" title="58"><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb1-59" title="59"><span class="co">#&gt; 1     1 if    </span></a>
+<a class="sourceLine" id="cb1-60" title="60"><span class="co">#&gt; 2     1 you   </span></a>
+<a class="sourceLine" id="cb1-61" title="61"><span class="co">#&gt; 3     1 forget</span></a>
+<a class="sourceLine" id="cb1-62" title="62"><span class="co">#&gt; 4     1 me    </span></a>
+<a class="sourceLine" id="cb1-63" title="63"><span class="co">#&gt; 5     2 by    </span></a>
+<a class="sourceLine" id="cb1-64" title="64"><span class="co">#&gt; 6     2 pablo </span></a>
+<a class="sourceLine" id="cb1-65" title="65"><span class="co">#&gt; # ... with 74 more rows</span></a>
+<a class="sourceLine" id="cb1-66" title="66"><span class="kw">data</span>(stop_words)</a>
+<a class="sourceLine" id="cb1-67" title="67">text_word_count &lt;-<span class="st"> </span>text_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-68" title="68"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-69" title="69"><span class="st">  </span><span class="kw">anti_join</span>(stop_words) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get rid of uninteresting words</span></a>
+<a class="sourceLine" id="cb1-70" title="70"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="co"># count of each word left</span></a>
+<a class="sourceLine" id="cb1-71" title="71"><span class="co">#&gt; Joining, by = &quot;word&quot;</span></a></code></pre></div>
+<hr />
+</div>
+<div id="unnest_tokens-on-larger-text" class="section level2">
+<h2><span class="header-section-number">5.2</span> <code>unnest_tokens()</code> on larger text</h2>
+<p>Section 1.3 in online book. Then watch this <a href="https://youtu.be/qCvyzp7JSOI">video</a> as you work through this section.</p>
+<p>Let’s look at a larger text, say all of Jane Austen’s novels.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">orig_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">linenumber =</span> <span class="kw">row_number</span>(),</a>
+<a class="sourceLine" id="cb2-4" title="4">         <span class="dt">chapter =</span> <span class="kw">cumsum</span>(<span class="kw">str_detect</span>(text, </a>
+<a class="sourceLine" id="cb2-5" title="5">             <span class="kw">regex</span>(<span class="st">&quot;^chapter [</span><span class="ch">\\</span><span class="st">divxlc]&quot;</span>, </a>
+<a class="sourceLine" id="cb2-6" title="6">                   <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">select</span>(chapter, linenumber, <span class="kw">everything</span>())</a>
+<a class="sourceLine" id="cb2-9" title="9">orig_books</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; # A tibble: 73,422 x 4</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt;   chapter linenumber text                    book               </span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt;     &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                   &lt;fct&gt;              </span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; 1       0          1 &quot;SENSE AND SENSIBILITY&quot; Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; 2       0          2 &quot;&quot;                      Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; 3       0          3 &quot;by Jane Austen&quot;        Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; 4       0          4 &quot;&quot;                      Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; 5       0          5 &quot;(1811)&quot;                Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; 6       0          6 &quot;&quot;                      Sense &amp; Sensibility</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; # ... with 73,416 more rows</span></a>
+<a class="sourceLine" id="cb2-20" title="20"></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#  make data tidy</span></a>
+<a class="sourceLine" id="cb2-22" title="22">tidy_books &lt;-<span class="st"> </span>orig_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="st">  </span><span class="co"># use str_extract because some gutenberg texts have other symbols around</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="st">  </span><span class="co"># the words as part of the encoding</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z&#39;]+&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="st">  </span><span class="kw">anti_join</span>(stop_words)</a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; Joining, by = &quot;word&quot;</span></a>
+<a class="sourceLine" id="cb2-29" title="29"></a>
+<a class="sourceLine" id="cb2-30" title="30">tidy_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; # A tibble: 13,464 x 2</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt;   word      n</span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; * &lt;chr&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; 1 miss   1860</span></a>
+<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; 2 time   1339</span></a>
+<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; 3 fanny   862</span></a>
+<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt; 4 dear    822</span></a>
+<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; 5 lady    819</span></a>
+<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt; 6 sir     807</span></a>
+<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt; # ... with 13,458 more rows</span></a>
+<a class="sourceLine" id="cb2-42" title="42"></a>
+<a class="sourceLine" id="cb2-43" title="43"><span class="co"># visualize</span></a>
+<a class="sourceLine" id="cb2-44" title="44">tidy_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-45" title="45"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-46" title="46"><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">400</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-47" title="47"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word,n)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-48" title="48"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(word, n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-49" title="49"><span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-50" title="50"><span class="st">    </span><span class="kw">xlab</span>(<span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-51" title="51"><span class="st">    </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="tidytext_files/figure-html/get_austen-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<hr />
+</div>
+<div id="compare-word-frequencies-between-authors" class="section level2">
+<h2><span class="header-section-number">5.3</span> Compare word frequencies between authors</h2>
+<p>This section corresponds to section 1.4 in the online book. Watch this <a href="https://youtu.be/qc7wuH9Dhp0">video</a> as you work through this section.</p>
+<p>We now compare frequencies across different authors. We will look at H.G. Wells (The Island of Doctor Moreau, The War of the Worlds, The Time Machine, and The Invisible Man) and the Bronte Sisters (Jane Eyre, Wuthering Heights, Agnes Grey, The Tenant of Wildfell Hall and Villette) since they are from a similar time-frame as Jane Austen.</p>
+<p>First, take a few minutes to explore the <a href="http://www.gutenberg.org/">gutenberg website</a>. We will search by author and then find the book numbers we want to download.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">hgwells &lt;-<span class="st"> </span><span class="kw">gutenberg_download</span>(<span class="kw">c</span>(<span class="dv">35</span>, <span class="dv">36</span>, <span class="dv">159</span>, <span class="dv">5230</span>))</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; Determining mirror for Project Gutenberg from http://www.gutenberg.org/robot/harvest</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; Using mirror http://aleph.gutenberg.org</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; Warning: `do()` is deprecated as of dplyr 1.0.0.</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; Use condense() or summarise()</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; This warning is displayed once every 8 hours.</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span></a>
+<a class="sourceLine" id="cb3-8" title="8">bronte &lt;-<span class="st"> </span><span class="kw">gutenberg_download</span>(<span class="kw">c</span>(<span class="dv">767</span>, <span class="dv">768</span>, <span class="dv">969</span>, <span class="dv">1260</span>, <span class="dv">9182</span>))</a>
+<a class="sourceLine" id="cb3-9" title="9">tidy_hgwells &lt;-<span class="st"> </span>hgwells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z&#39;]+&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw">anti_join</span>(stop_words)</a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; Joining, by = &quot;word&quot;</span></a>
+<a class="sourceLine" id="cb3-14" title="14">tidy_bronte &lt;-<span class="st"> </span>bronte <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z&#39;]+&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">anti_join</span>(stop_words)</a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; Joining, by = &quot;word&quot;</span></a>
+<a class="sourceLine" id="cb3-19" title="19">tidy_hgwells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt; # A tibble: 11,648 x 2</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;   word       n</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; * &lt;chr&gt;  &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt; 1 time     454</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; 2 people   302</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="co">#&gt; 3 door     260</span></a>
+<a class="sourceLine" id="cb3-27" title="27"><span class="co">#&gt; 4 heard    249</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt; 5 black    232</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; 6 stood    229</span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; # ... with 11,642 more rows</span></a>
+<a class="sourceLine" id="cb3-31" title="31">tidy_bronte <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="co">#&gt; # A tibble: 22,516 x 2</span></a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="co">#&gt;   word      n</span></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; * &lt;chr&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; 1 time   1065</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="co">#&gt; 2 miss    856</span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="co">#&gt; 3 day     828</span></a>
+<a class="sourceLine" id="cb3-39" title="39"><span class="co">#&gt; 4 hand    768</span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="co">#&gt; 5 eyes    713</span></a>
+<a class="sourceLine" id="cb3-41" title="41"><span class="co">#&gt; 6 night   647</span></a>
+<a class="sourceLine" id="cb3-42" title="42"><span class="co">#&gt; # ... with 22,510 more rows</span></a></code></pre></div>
+<p>Put all three authors together in one tibble with a new column showing author.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">frequency_by_word_across_authors &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="kw">mutate</span>(tidy_bronte,</a>
+<a class="sourceLine" id="cb4-2" title="2">                 <span class="dt">author =</span> <span class="st">&quot;Bronte&quot;</span>),</a>
+<a class="sourceLine" id="cb4-3" title="3">                 <span class="kw">mutate</span>(tidy_hgwells, <span class="dt">author =</span> <span class="st">&quot;Wells&quot;</span>),</a>
+<a class="sourceLine" id="cb4-4" title="4">                 <span class="kw">mutate</span>(tidy_books, <span class="dt">author =</span> <span class="st">&quot;Austen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">str_extract</span>(word, <span class="st">&quot;[a-z&#39;]+&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="st">            </span><span class="kw">count</span>(author, word) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="st">            </span><span class="kw">group_by</span>(author) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">proportion =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="st">            </span><span class="kw">select</span>(<span class="op">-</span>n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="st">            </span><span class="kw">spread</span>(author, proportion)</a>
+<a class="sourceLine" id="cb4-11" title="11">frequency_by_word_across_authors</a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; # A tibble: 28,678 x 4</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   word           Austen      Bronte      Wells</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 1 a&#39;most    NA           0.0000160  NA        </span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 2 a&#39;n&#39;t      0.00000462 NA          NA        </span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 3 aback     NA           0.00000400  0.0000150</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 4 abaht     NA           0.00000400 NA        </span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 5 abandon   NA           0.0000320   0.0000150</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; 6 abandoned  0.00000462  0.0000920   0.000180 </span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; # ... with 28,672 more rows</span></a>
+<a class="sourceLine" id="cb4-22" title="22">frequency &lt;-<span class="st"> </span>frequency_by_word_across_authors <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="st">            </span><span class="kw">gather</span>(author, proportion, <span class="st">`</span><span class="dt">Bronte</span><span class="st">`</span><span class="op">:</span><span class="st">`</span><span class="dt">Wells</span><span class="st">`</span>)</a>
+<a class="sourceLine" id="cb4-24" title="24">frequency</a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt; # A tibble: 57,356 x 4</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt;   word           Austen author  proportion</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt; 1 a&#39;most    NA          Bronte  0.0000160 </span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; 2 a&#39;n&#39;t      0.00000462 Bronte NA         </span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; 3 aback     NA          Bronte  0.00000400</span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; 4 abaht     NA          Bronte  0.00000400</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt; 5 abandon   NA          Bronte  0.0000320 </span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt; 6 abandoned  0.00000462 Bronte  0.0000920 </span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; # ... with 57,350 more rows</span></a></code></pre></div>
+<hr />
+</div>
+<div id="compare-word-frequency-by-author-to-austen" class="section level2">
+<h2><span class="header-section-number">5.4</span> Compare word frequency by author to Austen</h2>
+<p>Book sections 1.5 - 1.6 and this <a href="https://youtu.be/vvmoHPM1Yf0">video</a></p>
+<p>Now let’s graph the frequency comparison of each other author to Jane Austen.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">frequency <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> proportion, </a>
+<a class="sourceLine" id="cb5-2" title="2">          <span class="dt">y =</span> <span class="st">`</span><span class="dt">Austen</span><span class="st">`</span>, </a>
+<a class="sourceLine" id="cb5-3" title="3">          <span class="dt">color =</span> <span class="kw">abs</span>(<span class="st">`</span><span class="dt">Austen</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>proportion))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;gray40&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.1</span>, <span class="dt">size =</span> <span class="fl">2.5</span>, </a>
+<a class="sourceLine" id="cb5-6" title="6">              <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">height =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> word), </a>
+<a class="sourceLine" id="cb5-8" title="8">            <span class="dt">check_overlap =</span> <span class="ot">TRUE</span>, <span class="dt">vjust =</span> <span class="fl">1.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">scale_x_log10</span>(<span class="dt">labels =</span> <span class="kw">percent_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">scale_y_log10</span>(<span class="dt">labels =</span> <span class="kw">percent_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">scale_color_gradient</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.001</span>), </a>
+<a class="sourceLine" id="cb5-12" title="12">                       <span class="dt">low =</span> <span class="st">&quot;darkslategray4&quot;</span>,</a>
+<a class="sourceLine" id="cb5-13" title="13">                       <span class="dt">high =</span> <span class="st">&quot;gray75&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>author, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Jane Austen&quot;</span>, <span class="dt">x =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt; Warning: Removed 41043 rows containing missing values (geom_point).</span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt; Warning: Removed 41045 rows containing missing values (geom_text).</span></a></code></pre></div>
+<p><img src="tidytext_files/figure-html/compare-1.png" width="70%" style="display: block; margin: auto;" />
+We can tell that Austen and Bronte are more similar (grouped closer to the line) than Austen and Wells. Let’s use a correlation test to quantify the amounts.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df_Bronte &lt;-<span class="st"> </span>frequency[frequency<span class="op">$</span>author <span class="op">==</span><span class="st"> &quot;Bronte&quot;</span>,]</a>
+<a class="sourceLine" id="cb6-2" title="2">df_Bronte</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; # A tibble: 28,678 x 4</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt;   word           Austen author  proportion</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; 1 a&#39;most    NA          Bronte  0.0000160 </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 2 a&#39;n&#39;t      0.00000462 Bronte NA         </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 3 aback     NA          Bronte  0.00000400</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 4 abaht     NA          Bronte  0.00000400</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; 5 abandon   NA          Bronte  0.0000320 </span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 6 abandoned  0.00000462 Bronte  0.0000920 </span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; # ... with 28,672 more rows</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="kw">cor.test</span>(<span class="dt">data =</span> df_Bronte,  <span class="op">~</span><span class="st"> </span>proportion <span class="op">+</span><span class="st"> `</span><span class="dt">Austen</span><span class="st">`</span>)</a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt;  Pearson&#39;s product-moment correlation</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; data:  proportion and Austen</span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt; t = 119, df = 10299, p-value &lt;2e-16</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt; 95 percent confidence interval:</span></a>
+<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt;  0.753 0.769</span></a>
+<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt; sample estimates:</span></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt;   cor </span></a>
+<a class="sourceLine" id="cb6-24" title="24"><span class="co">#&gt; 0.761</span></a>
+<a class="sourceLine" id="cb6-25" title="25">df_Wells &lt;-<span class="st"> </span>frequency[frequency<span class="op">$</span>author <span class="op">==</span><span class="st"> &quot;Wells&quot;</span>,]</a>
+<a class="sourceLine" id="cb6-26" title="26">df_Wells</a>
+<a class="sourceLine" id="cb6-27" title="27"><span class="co">#&gt; # A tibble: 28,678 x 4</span></a>
+<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt;   word           Austen author proportion</span></a>
+<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; 1 a&#39;most    NA          Wells  NA        </span></a>
+<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; 2 a&#39;n&#39;t      0.00000462 Wells  NA        </span></a>
+<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; 3 aback     NA          Wells   0.0000150</span></a>
+<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt; 4 abaht     NA          Wells  NA        </span></a>
+<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt; 5 abandon   NA          Wells   0.0000150</span></a>
+<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; 6 abandoned  0.00000462 Wells   0.000180 </span></a>
+<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt; # ... with 28,672 more rows</span></a>
+<a class="sourceLine" id="cb6-37" title="37"><span class="kw">cor.test</span>(<span class="dt">data =</span> df_Wells,  <span class="op">~</span><span class="st"> </span>proportion <span class="op">+</span><span class="st"> `</span><span class="dt">Austen</span><span class="st">`</span>)</a>
+<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt;  Pearson&#39;s product-moment correlation</span></a>
+<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; data:  proportion and Austen</span></a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; t = 36, df = 6010, p-value &lt;2e-16</span></a>
+<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; alternative hypothesis: true correlation is not equal to 0</span></a>
+<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; 95 percent confidence interval:</span></a>
+<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt;  0.403 0.445</span></a>
+<a class="sourceLine" id="cb6-46" title="46"><span class="co">#&gt; sample estimates:</span></a>
+<a class="sourceLine" id="cb6-47" title="47"><span class="co">#&gt;   cor </span></a>
+<a class="sourceLine" id="cb6-48" title="48"><span class="co">#&gt; 0.424</span></a></code></pre></div>
+<ul>
+<li><strong>Exercise 1:</strong> Repeat the above analysis using all the H.G. Wells and Bronte works that are available on gutenberg.org</li>
+</ul>
+<p>You will need to use gutenberg_works(author == “Wells, H. G. (Herbert George)”) to get started. We figured this out by looking at any H.G. Wells book on the gutenberg.org website and then looking at the Bibiliography Record to see how the author is listed there. Similarly, find the Bronte works.</p>
+<ul>
+<li><strong>Exercise 2:</strong> Pick three other authors from Gutenberg.org and download their works. Compare the authors. Which two are more alike? Some suggestions if you can’t think of any: Mark Twain, Leo Tolstoy, Charles Dickens.</li>
+</ul>
+<pre><code>#&gt; Warning: `filter_()` is deprecated as of dplyr 0.7.0.
+#&gt; Please use `filter()` instead.
+#&gt; See vignette(&#39;programming&#39;) for more help
+#&gt; This warning is displayed once every 8 hours.
+#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.
+#&gt; Warning: `distinct_()` is deprecated as of dplyr 0.7.0.
+#&gt; Please use `distinct()` instead.
+#&gt; See vignette(&#39;programming&#39;) for more help
+#&gt; This warning is displayed once every 8 hours.
+#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.
+#&gt; Joining, by = &quot;word&quot;
+#&gt; Joining, by = &quot;word&quot;
+#&gt; # A tibble: 61,913 x 4
+#&gt;   word      Austen Bronte       Wells
+#&gt;   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+#&gt; 1 &#39;             NA     NA 0.00000126 
+#&gt; 2 a&#39;ch          NA     NA 0.000000628
+#&gt; 3 a&#39;chitect     NA     NA 0.00000126 
+#&gt; 4 a&#39;eplane      NA     NA 0.000000628
+#&gt; 5 a&#39;hm          NA     NA 0.000000628
+#&gt; 6 a&#39;ll          NA     NA 0.00000188 
+#&gt; # ... with 61,907 more rows
+#&gt; # A tibble: 123,826 x 4
+#&gt;   word      Austen author proportion
+#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+#&gt; 1 &#39;             NA Bronte         NA
+#&gt; 2 a&#39;ch          NA Bronte         NA
+#&gt; 3 a&#39;chitect     NA Bronte         NA
+#&gt; 4 a&#39;eplane      NA Bronte         NA
+#&gt; 5 a&#39;hm          NA Bronte         NA
+#&gt; 6 a&#39;ll          NA Bronte         NA
+#&gt; # ... with 123,820 more rows
+#&gt; Warning: Removed 101057 rows containing missing values (geom_point).
+#&gt; Warning: Removed 101059 rows containing missing values (geom_text).
+#&gt; # A tibble: 61,913 x 4
+#&gt;   word      Austen author proportion
+#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+#&gt; 1 &#39;             NA Bronte         NA
+#&gt; 2 a&#39;ch          NA Bronte         NA
+#&gt; 3 a&#39;chitect     NA Bronte         NA
+#&gt; 4 a&#39;eplane      NA Bronte         NA
+#&gt; 5 a&#39;hm          NA Bronte         NA
+#&gt; 6 a&#39;ll          NA Bronte         NA
+#&gt; # ... with 61,907 more rows
+#&gt; 
+#&gt;  Pearson&#39;s product-moment correlation
+#&gt; 
+#&gt; data:  proportion and Austen
+#&gt; t = 119, df = 10914, p-value &lt;2e-16
+#&gt; alternative hypothesis: true correlation is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.742 0.758
+#&gt; sample estimates:
+#&gt;  cor 
+#&gt; 0.75
+#&gt; # A tibble: 61,913 x 4
+#&gt;   word      Austen author  proportion
+#&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+#&gt; 1 &#39;             NA Wells  0.00000126 
+#&gt; 2 a&#39;ch          NA Wells  0.000000628
+#&gt; 3 a&#39;chitect     NA Wells  0.00000126 
+#&gt; 4 a&#39;eplane      NA Wells  0.000000628
+#&gt; 5 a&#39;hm          NA Wells  0.000000628
+#&gt; 6 a&#39;ll          NA Wells  0.00000188 
+#&gt; # ... with 61,907 more rows
+#&gt; 
+#&gt;  Pearson&#39;s product-moment correlation
+#&gt; 
+#&gt; data:  proportion and Austen
+#&gt; t = 45, df = 11851, p-value &lt;2e-16
+#&gt; alternative hypothesis: true correlation is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.365 0.396
+#&gt; sample estimates:
+#&gt;   cor 
+#&gt; 0.381</code></pre>
+<p><img src="tidytext_files/figure-html/exercise1-1.png" width="70%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="text1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidy-text-mining-from-stat-413-continued.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

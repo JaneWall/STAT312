@@ -1,0 +1,23 @@
+new_session: true
+
+rmd_files: [
+  "index.Rmd",
+  "intro.Rmd",
+
+  "visualization.Rmd",
+  "ggplot_starter.Rmd",
+  
+  "text_analysis.Rmd",
+  "text1.Rmd",
+  "tidytext.Rmd",
+  "tidytext2.Rmd",
+  
+  "music_analysis.Rmd",
+  "music1.Rmd",
+  
+  "ethics.Rmd",
+  "machine_learning_intro.Rmd",
+  
+]
+
+before_chapter_script: "_common.R"
